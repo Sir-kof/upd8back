@@ -47,9 +47,17 @@ const makeSut = (): SutTypes => {
 
 describe('DbGetUser Usecase', () => {
   test('Should call GetUserRepository with correct values', async () => {
-    const { sut, getUserRepositoryStub } = makeSut()
-    const getSpy = jest.spyOn(getUserRepositoryStub, 'get')
-    await sut.get(makeFakeUserData())
-    expect(getSpy).toHaveBeenCalledWith(makeFakeUserData())
+    const { sut } = makeSut()
+    const promise = await sut.get(makeFakeUserData())
+    expect(promise).toEqual({
+      id: 'valid_id',
+      cpf: 'valid_cpf',
+      name: 'valid_name',
+      address: 'valid_address',
+      birthday: '10/10/2022',
+      gender: 'male',
+      state: 'Rio de Janeiro',
+      cidade: 'Duque de Caxias'
+    })
   })
 })
