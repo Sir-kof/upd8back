@@ -22,14 +22,14 @@ export default (router: Router): void => {
       state,
       city
     })
-    return res.json(resultadoCreate)
+    return res.status(200).json(resultadoCreate)
   })
 
   // ----------------------- Get ---------------------------------
   router.get('/user/:cpf', async (req, res) => {
     const cpf = req.params.cpf
     const user = await User.findOne({ where: { cpf } })
-    return res.json(user)
+    return res.status(200).json(user)
   })
 
   // ----------------------- Update -----------------------------
@@ -51,13 +51,13 @@ export default (router: Router): void => {
         cpf
       }
     })
-    return res.json(resultUpdate)
+    return res.status(200).json(resultUpdate)
   })
 
   // ----------------------- Delete -----------------------------
   router.delete('/user/:cpf', async (req, res) => {
     const { cpf } = req.body
     const user = await User.destroy({ where: { cpf } })
-    return res.json(user)
+    return res.status(200).json(user)
   })
 }
