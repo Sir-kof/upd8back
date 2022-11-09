@@ -10,7 +10,8 @@ export const User = database.define('User', {
   },
   cpf: {
     type: DataTypes.BIGINT(),
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   name: {
     type: DataTypes.STRING,
@@ -22,6 +23,10 @@ export const User = database.define('User', {
   },
   birthday: {
     type: DataTypes.DATEONLY,
+    allowNull: false
+  },
+  gender: {
+    type: DataTypes.STRING,
     allowNull: false
   },
   state: {

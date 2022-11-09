@@ -33,7 +33,7 @@ export default (router: Router): void => {
   })
 
   // ----------------------- Update -----------------------------
-  router.put('/user', async (req, res) => {
+  router.put('/user/:cpf', async (req, res) => {
     const {
       cpf,
       name,
@@ -45,10 +45,10 @@ export default (router: Router): void => {
     } = req.body
 
     const resultUpdate = await User.update({
-      cpf, name, address, birthday, gender, state, city
+      name, address, birthday, state, city
     }, {
       where: {
-        cpf
+        cpf: req.params.cpf
       }
     })
     return res.status(200).json(resultUpdate)
@@ -56,8 +56,7 @@ export default (router: Router): void => {
 
   // ----------------------- Delete -----------------------------
   router.delete('/user/:cpf', async (req, res) => {
-    const { cpf } = req.body
-    const user = await User.destroy({ where: { cpf } })
+    const user = await User.destroy({ where: { cpf: req.params.cpf } })
     return res.status(200).json(user)
   })
 }
