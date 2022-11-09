@@ -2,7 +2,7 @@
 
 Rotas do CRUD:
 
-http://{baseURL}:{env.port}/api/user CREATE - Cria um cadastro
+http://localhost:{env.port}/api/user CREATE - Cria um cadastro
 
 http://localhost:{env.port}/api/user/:cpf READ - Retorna um perfil por vez
 
