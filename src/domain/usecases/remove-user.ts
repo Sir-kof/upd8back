@@ -1,7 +1,7 @@
 export interface IRemoveUserModel {
-  id: any
+  cpf: any
 }
 
 export interface IRemoveUser {
-  remove: (userId: any) => Promise<boolean>
+  remove: (userCpf: any) => Promise<boolean>
 }

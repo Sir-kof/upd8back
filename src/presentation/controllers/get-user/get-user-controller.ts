@@ -1,38 +1,14 @@
-import { HttpResponse, HttpRequest, Controller, IGetUser, Validation } from './get-user-controller-protocols'
-import { badRequest, serverError, ok } from '../../helpers/http/http-helper'
+import { serverError } from '../../helpers/http/http-helper'
+import { MysqlHelper } from '../../../infra/db/mysql/helpers/mysql-helper'
 
-export class GetUserController implements Controller {
-  constructor (
-    private readonly getUser: IGetUser,
-    private readonly validation: Validation
-  ) {}
-
-  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    let response: HttpResponse
-
-    try {
-      const error = this.validation.validate(httpRequest.body)
-      if (error) {
-        response = badRequest(error)
-        return response
-      }
-      const { cpf, name, address, birthday, gender, state, cidade } = httpRequest.body
-      const user = await this.getUser.get({
-        cpf,
-        name,
-        address,
-        birthday,
-        gender,
-        state,
-        cidade
-      })
-
-      response = ok(user)
-      return response
-    } catch (error) {
-      response = serverError(error)
-    }
-
-    return response
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const GetUserController = async (req, res) => {
+  try {
+    const cpf = req.params.cpf
+    const user = await MysqlHelper.getOne(cpf)
+    console.log('entrou no get')
+    return res.status(200).json(user)
+  } catch (e) {
+    return serverError(e)
   }
 }

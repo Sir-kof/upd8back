@@ -35,11 +35,9 @@ export default (router: Router): void => {
   // ----------------------- Update -----------------------------
   router.put('/user/:cpf', async (req, res) => {
     const {
-      cpf,
       name,
       address,
       birthday,
-      gender,
       state,
       city
     } = req.body

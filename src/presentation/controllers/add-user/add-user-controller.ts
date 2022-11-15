@@ -1,38 +1,12 @@
-import { HttpResponse, HttpRequest, Controller, IAddUser, Validation } from './add-user-controller-protocols'
-import { badRequest, serverError, ok } from '../../helpers/http/http-helper'
+import { serverError } from '../../helpers/http/http-helper'
+import { MysqlHelper } from '../../../infra/db/mysql/helpers/mysql-helper'
 
-export class AddUserController implements Controller {
-  constructor (
-    private readonly addUser: IAddUser,
-    private readonly validation: Validation
-  ) {}
-
-  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    let response: HttpResponse
-
-    try {
-      const error = this.validation.validate(httpRequest.body)
-      if (error) {
-        response = badRequest(error)
-        return response
-      }
-      const { cpf, name, address, birthday, gender, state, cidade } = httpRequest.body
-      const user = await this.addUser.add({
-        cpf,
-        name,
-        address,
-        birthday,
-        gender,
-        state,
-        cidade
-      })
-
-      response = ok(user)
-      return response
-    } catch (error) {
-      response = serverError(error)
-    }
-
-    return response
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const AddUserController = async (req, res) => {
+  try {
+    const films = await MysqlHelper.create(req.body)
+    return res.status(200).json(films)
+  } catch (e) {
+    return serverError(e)
   }
 }
